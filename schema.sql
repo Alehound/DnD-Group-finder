@@ -4,3 +4,9 @@ CREATE TABLE users (
     password_hash TEXT
 );
 
+CREATE TABLE items (
+    id INTEGER PRIMARY KEY,
+    title TEXT,
+    description TEXT,
+    user_id REFERENCES users
+);
