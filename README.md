@@ -10,3 +10,9 @@
 * Käyttäjä pystyy ilmoittautumaan muiden vetämiin peliryhmiin pelaajaksi. Ilmoituksessa näytetään, ketkä pelaajat ovat ilmoittautuneet ja muita olennaisia tietoja kyseisestä peliryhmästä.
 
 * Tässä pääasiallinen tietokohde on peliryhmien ilmoitukset ja toissijainen tietokohde on peliryhmiin ilmoittautuminen.
+
+# Välipalautus 2
+
+* Käyttäjä pystyy luomaan tunnuksen ja kirjautumaan sisään sovellukseen.
+* Käyttäjä pystyy lisäämään ja muokkaamaan tietokohteita.
+* Käyttäjä näkee sovellukseen lisätyt tietokohteet.
