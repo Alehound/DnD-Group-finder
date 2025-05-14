@@ -19,6 +19,16 @@
   <p>
     Ilmoittaja: {{ item.username }}
   </p>
+  {% if classes %}
+  <p>
+    Tyypit:
+    <ul>
+      {% for class in classes %}
+      <li>{{class.title}}: {{ class.value }}</li>
+      {% endfor %}
+    </ul>
+  </p>
+  {% endif %}
   <p>
     <a href="/">Palaa takaisin</a>
   </p>
