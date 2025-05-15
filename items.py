@@ -9,7 +9,7 @@ def get_all_classes():
         classes[title] = []
     for title, value in result:
         classes[title].append(value)
-    
+
     return classes
 
 
@@ -44,11 +44,18 @@ def get_classes(item_id):
     sql = "SELECT title, value FROM item_classes WHERE item_id = ?"
     return db.query(sql, [item_id])
 
-def update_item(item_id, title, description):
+def update_item(item_id, title, description, classes):
     sql = """UPDATE items SET title = ?,
                             description = ?
                             WHERE id = ?"""
     db.execute(sql, [title, description, item_id])
+
+    sql = "DELETE FROM item_classes WHERE item_id = ?"
+    db.execute(sql, [item_id])
+
+    sql = "INSERT INTO item_classes (item_id, title, value) VALUES (?, ?, ?)"
+    for title, value in classes:
+        db.execute(sql, [item_id, title, value])
 
 def remove_item(item_id):
     sql = "DELETE FROM items WHERE id = ?"
