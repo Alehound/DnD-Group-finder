@@ -31,7 +31,8 @@ def show_item(item_id):
     if not item:
         abort(404)
     classes = items.get_classes(item_id)
-    return render_template("show_item.html", item=item, classes=classes)
+    sign_ups = items.get_sign_ups(item_id)
+    return render_template("show_item.html", item=item, classes=classes, sign_ups=sign_ups)
 
 @app.route("/new_item")
 def new_item():
@@ -65,6 +66,22 @@ def create_item():
     items.add_item(title, description, user_id, classes)
 
     return redirect("/")
+
+@app.route("/create_sign_up", methods=["POST"])
+def create_sign_up():
+    require_login()
+    application = request.form["application"]
+    if not application or len(application) > 1000:
+        abort(403)
+    item_id =request.form["item_id"]
+    item = items.get_item(item_id)
+    if not item:
+        abort(403)
+    user_id = session["user_id"]
+
+    items.add_sign_up(item_id, user_id, application)
+
+    return redirect("/show_item/" + str(item_id))
 
 @app.route("/edit_item/<int:item_id>")
 def edit_item(item_id):
