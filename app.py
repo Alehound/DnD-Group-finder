@@ -32,7 +32,9 @@ def show_item(item_id):
         abort(404)
     classes = items.get_classes(item_id)
     sign_ups = items.get_sign_ups(item_id)
-    return render_template("show_item.html", item=item, classes=classes, sign_ups=sign_ups)
+    user_id = session["user_id"]
+    is_owner = user_id is not None and user_id == item["user_id"]
+    return render_template("show_item.html", item=item, classes=classes, sign_ups=sign_ups, is_owner=is_owner)
 
 @app.route("/new_item")
 def new_item():

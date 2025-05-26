@@ -34,7 +34,7 @@ def get_items():
     return db.query(sql)
 
 def get_sign_ups(item_id):
-    sql = """SELECT sign_ups.application, users.id, users.username
+    sql = """SELECT sign_ups.application, users.id user_id, users.username
         FROM sign_ups, users
         WHERE sign_ups.item_id = ? AND sign_ups.user_id = users.id
         ORDER BY sign_ups.id"""

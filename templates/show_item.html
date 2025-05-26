@@ -6,6 +6,7 @@
 </head>
 
 <body>
+  {% set logged_in = session.user_id is defined and session.username %}
   <h1>{{ item.title }}</h1>
   {% if session.user_id == item.user_id %}
   <p>
@@ -13,9 +14,13 @@
     <a href="/remove_item/{{ item.id }}">Poista</a>
   </p>
   {% endif %}
-  <p>
-    Pelin vetäjä: <a href="/user/{{ item.user_id }}">{{item.username }}</a>
-  </p>
+  {% if is_owner %}
+  <p>Olet pelin vetäjä</p>
+  {% else %}
+    <p>
+      Pelin vetäjä: <a href="/user/{{ item.user_id }}">{{item.username }}</a>
+    </p>
+  {% endif %}
   {% if classes %}
   <p>
     <ul>
@@ -36,20 +41,29 @@
     {% for sign_up in sign_ups %}
     <li>
       <a href="/user/{{ sign_up.user_id }}">{{ sign_up.username }}</a>:
-      {{ sign_up.application }}
+      <p>{{ sign_up.application }}</p>
+      {% if sign_up.user_id == session.user_id or is_owner %}
+        <p>to do: remove comment</p>
+      {% endif %}
     </li>
     {% endfor %}
   {% endif %}
-  {% if  sign_ups | count < item.participants %}
-  <h2>Ilmoittautuminen</h2>
-  <form action="/create_sign_up" method="post">
-    <textarea name="application" rows="8" cols="60" maxlength="1000" required></textarea>
-    <input type="hidden" name="item_id" value="{{ item.id }}">
-    <input type="submit" value="Ilmoittaudu" />
-  </form>
-  {% else %}
-  <p>Et voi ilmoittautua sillä peli on täynnä</p>
-  {% endif %}
+    {% if logged_in %}
+      {% if session.user_id != sign_ups.user_id and not is_owner %}
+        {% if  sign_ups | count < item.participants %}
+          <h2>Ilmoittautuminen</h2>
+          <form action="/create_sign_up" method="post">
+            <textarea name="application" rows="8" cols="60" maxlength="1000" required></textarea>
+            <input type="hidden" name="item_id" value="{{ item.id }}">
+            <input type="submit" value="Ilmoittaudu" />
+          </form>
+        {% else %}
+          <p>Et voi ilmoittautua sillä peli on täynnä</p>
+        {% endif %}
+      {% else %}
+      <p>olet jo pelissä</p>
+      {% endif %}
+    {% endif %}
   <p>
     <a href="/">Palaa takaisin</a>
   </p>
