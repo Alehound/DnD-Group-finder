@@ -8,6 +8,7 @@ CREATE TABLE items (
     id INTEGER PRIMARY KEY,
     title TEXT,
     description TEXT,
+    participants INTEGER,
     user_id REFERENCES users
 );
 

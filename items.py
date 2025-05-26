@@ -13,9 +13,9 @@ def get_all_classes():
     return classes
 
 
-def add_item(title, description, user_id, classes):
-    sql = "INSERT INTO items (title, description, user_id) VALUES (?, ?, ?)"
-    db.execute(sql, [title, description, user_id])
+def add_item(title, description, participants, user_id, classes):
+    sql = "INSERT INTO items (title, description, participants, user_id) VALUES (?, ?, ?, ?)"
+    db.execute(sql, [title, description, participants, user_id])
 
     item_id = db.last_insert_id()
 
@@ -44,6 +44,7 @@ def get_item(item_id):
     sql = """SELECT items.id,
                     items.title,
                     items.description,
+                    items.participants,
                     users.username,
                     users.id user_id
                 FROM items, users
@@ -57,11 +58,12 @@ def get_classes(item_id):
     sql = "SELECT title, value FROM item_classes WHERE item_id = ?"
     return db.query(sql, [item_id])
 
-def update_item(item_id, title, description, classes):
+def update_item(item_id, title, description, participants, classes):
     sql = """UPDATE items SET title = ?,
-                            description = ?
+                            description = ?,
+                            participants = ?
                             WHERE id = ?"""
-    db.execute(sql, [title, description, item_id])
+    db.execute(sql, [title, description, participants, item_id])
 
     sql = "DELETE FROM item_classes WHERE item_id = ?"
     db.execute(sql, [item_id])

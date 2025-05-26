@@ -16,6 +16,10 @@
         Kuvaus: <br />
         <textarea name="description" rows="8" cols="60" maxlength="1000" required></textarea>
     </p>
+    <p>
+        Osallistujia(1-9): <br />
+        <input type="number" name="participants" min="1" max="9" required/>
+    </p>
     {% for class in classes %}
     <p>
       {{ class }}: <br />
