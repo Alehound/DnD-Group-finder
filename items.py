@@ -58,12 +58,11 @@ def get_classes(item_id):
     sql = "SELECT title, value FROM item_classes WHERE item_id = ?"
     return db.query(sql, [item_id])
 
-def update_item(item_id, title, description, participants, classes):
+def update_item(item_id, title, description, classes):
     sql = """UPDATE items SET title = ?,
-                            description = ?,
-                            participants = ?
+                            description = ?
                             WHERE id = ?"""
-    db.execute(sql, [title, description, participants, item_id])
+    db.execute(sql, [title, description, item_id])
 
     sql = "DELETE FROM item_classes WHERE item_id = ?"
     db.execute(sql, [item_id])
@@ -73,6 +72,8 @@ def update_item(item_id, title, description, participants, classes):
         db.execute(sql, [item_id, title, value])
 
 def remove_item(item_id):
+    sql = "DELETE FROM sign_ups WHERE item_id = ?"
+    db.execute(sql, [item_id])
     sql = "DELETE FROM item_classes WHERE item_id = ?"
     db.execute(sql, [item_id])
     sql = "DELETE FROM items WHERE id = ?"

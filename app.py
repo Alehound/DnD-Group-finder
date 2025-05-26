@@ -123,13 +123,6 @@ def update_item():
     description = request.form["description"]
     if not description or len(description) > 1000:
         abort(403)
-    participants = request.form["participants"]
-    try:
-        participants_int = int(participants)
-        if participants_int < 1 or participants_int > 99:
-            abort(403)
-    except ValueError:
-        abort(403)
 
     all_classes = items.get_all_classes()
     classes = []
@@ -143,7 +136,7 @@ def update_item():
 
             classes.append((class_title, class_value))
 
-    items.update_item(item_id, title, description, participants, classes)
+    items.update_item(item_id, title, description, classes)
 
     return redirect("/show_item/" + str(item_id))
 

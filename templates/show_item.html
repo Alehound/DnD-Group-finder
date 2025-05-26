@@ -16,12 +16,6 @@
   <p>
     Pelin vetäjä: <a href="/user/{{ item.user_id }}">{{item.username }}</a>
   </p>
-  <p>
-    {{ item.description }}
-  </p>
-  <p>
-    Osallistujia: {{ item.participants }}
-  </p>
   {% if classes %}
   <p>
     <ul>
@@ -31,13 +25,21 @@
     </ul>
   </p>
   {% endif %}
-  <h2>Ilmoittautuneet</h2>
-  {% for sign_up in sign_ups %}
-  <li>
-    <a href="/user/{{ sign_up.user_id }}">{{ sign_up.username }}</a>:
-    {{ sign_up.application }}
-  </li>
-  {% endfor %}
+  <p>
+    {{ item.description }}
+  </p>
+  <p>
+  Osallistujia: {{ sign_ups | count}} / {{ item.participants }}
+  </p>
+  {% if sign_ups %}
+    <h2>Ilmoittautuneet</h2>
+    {% for sign_up in sign_ups %}
+    <li>
+      <a href="/user/{{ sign_up.user_id }}">{{ sign_up.username }}</a>:
+      {{ sign_up.application }}
+    </li>
+    {% endfor %}
+  {% endif %}
   <h2>Ilmoittautuminen</h2>
   <form action="/create_sign_up" method="post">
     <textarea name="application" rows="8" cols="60" maxlength="1000" required></textarea>
