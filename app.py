@@ -86,6 +86,11 @@ def create_sign_up():
         abort(403)
     user_id = session["user_id"]
 
+    maximum_participants = items.get_maximum_participants(item_id)
+    sign_ups = items.get_sign_ups(item_id)
+    if maximum_participants <= len(sign_ups):
+        abort(403)
+
     items.add_sign_up(item_id, user_id, application)
 
     return redirect("/show_item/" + str(item_id))

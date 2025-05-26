@@ -40,6 +40,10 @@ def get_sign_ups(item_id):
         ORDER BY sign_ups.id"""
     return db.query(sql, [item_id])
 
+def get_maximum_participants(item_id):
+    sql = "SELECT participants FROM items WHERE id = ?"
+    return int(db.query(sql, [item_id])[0][0])
+
 def get_item(item_id):
     sql = """SELECT items.id,
                     items.title,

@@ -40,12 +40,16 @@
     </li>
     {% endfor %}
   {% endif %}
+  {% if  sign_ups | count < item.participants %}
   <h2>Ilmoittautuminen</h2>
   <form action="/create_sign_up" method="post">
     <textarea name="application" rows="8" cols="60" maxlength="1000" required></textarea>
     <input type="hidden" name="item_id" value="{{ item.id }}">
     <input type="submit" value="Ilmoittaudu" />
   </form>
+  {% else %}
+  <p>Et voi ilmoittautua sillä peli on täynnä</p>
+  {% endif %}
   <p>
     <a href="/">Palaa takaisin</a>
   </p>
