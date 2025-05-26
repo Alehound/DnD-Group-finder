@@ -34,7 +34,10 @@ def show_item(item_id):
     sign_ups = items.get_sign_ups(item_id)
     user_id = session["user_id"]
     is_owner = user_id is not None and user_id == item["user_id"]
-    return render_template("show_item.html", item=item, classes=classes, sign_ups=sign_ups, is_owner=is_owner)
+    is_signed_up = any(s["user_id"] == user_id for s in sign_ups) if user_id else False
+
+    return render_template("show_item.html", item=item, classes=classes,
+            sign_ups=sign_ups, is_owner=is_owner, is_signed_up=is_signed_up)
 
 @app.route("/new_item")
 def new_item():
@@ -82,7 +85,7 @@ def create_sign_up():
     application = request.form["application"]
     if not application or len(application) > 1000:
         abort(403)
-    item_id =request.form["item_id"]
+    item_id = request.form["item_id"]
     item = items.get_item(item_id)
     if not item:
         abort(403)
@@ -94,6 +97,15 @@ def create_sign_up():
         abort(403)
 
     items.add_sign_up(item_id, user_id, application)
+
+    return redirect("/show_item/" + str(item_id))
+
+@app.route("/remove_sign_up", methods=["POST"])
+def remove_sign_up():
+    item_id = request.form["item_id"]
+    sign_up_id = request.form["sign_up_id"]
+
+    items.remove_sign_up(sign_up_id)
 
     return redirect("/show_item/" + str(item_id))
 
@@ -112,7 +124,7 @@ def edit_item(item_id):
         classes[entry["title"]] = entry["value"]
 
     return render_template("edit_item.html", item=item,
-                           classes = classes, all_classes=all_classes)
+                           classes=classes, all_classes=all_classes)
 
 @app.route("/update_item", methods=["POST"])
 def update_item():

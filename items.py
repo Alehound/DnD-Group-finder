@@ -34,7 +34,7 @@ def get_items():
     return db.query(sql)
 
 def get_sign_ups(item_id):
-    sql = """SELECT sign_ups.application, users.id user_id, users.username
+    sql = """SELECT sign_ups.id, sign_ups.application, users.id user_id, users.username
         FROM sign_ups, users
         WHERE sign_ups.item_id = ? AND sign_ups.user_id = users.id
         ORDER BY sign_ups.id"""
@@ -43,6 +43,10 @@ def get_sign_ups(item_id):
 def get_maximum_participants(item_id):
     sql = "SELECT participants FROM items WHERE id = ?"
     return int(db.query(sql, [item_id])[0][0])
+
+def remove_sign_up(sign_up_id):
+    sql = "DELETE FROM sign_ups WHERE id = ?"
+    db.execute(sql, [sign_up_id])
 
 def get_item(item_id):
     sql = """SELECT items.id,

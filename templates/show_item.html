@@ -15,7 +15,7 @@
   </p>
   {% endif %}
   {% if is_owner %}
-  <p>Olet pelin vetäjä</p>
+  <p>Hei {{ session.username }}! olet pelin vetäjä.</p>
   {% else %}
     <p>
       Pelin vetäjä: <a href="/user/{{ item.user_id }}">{{item.username }}</a>
@@ -43,13 +43,17 @@
       <a href="/user/{{ sign_up.user_id }}">{{ sign_up.username }}</a>:
       <p>{{ sign_up.application }}</p>
       {% if sign_up.user_id == session.user_id or is_owner %}
-        <p>to do: remove comment</p>
+        <form action="/remove_sign_up" method="post">
+          <input type="hidden" name="item_id" value="{{ item.id }}">
+          <input type="hidden" name="sign_up_id" value="{{ sign_up.id }}">
+          <input type="submit" value="Poista">
+        </form>
       {% endif %}
     </li>
     {% endfor %}
   {% endif %}
     {% if logged_in %}
-      {% if session.user_id != sign_ups.user_id and not is_owner %}
+      {% if not is_signed_up and not is_owner %}
         {% if  sign_ups | count < item.participants %}
           <h2>Ilmoittautuminen</h2>
           <form action="/create_sign_up" method="post">
@@ -58,10 +62,10 @@
             <input type="submit" value="Ilmoittaudu" />
           </form>
         {% else %}
-          <p>Et voi ilmoittautua sillä peli on täynnä</p>
+          <p>Et voi ilmoittautua sillä peli on täynnä.</p>
         {% endif %}
       {% else %}
-      <p>olet jo pelissä</p>
+      <p>Et voi ilmoittautua sillä olet jo pelissä.</p>
       {% endif %}
     {% endif %}
   <p>
