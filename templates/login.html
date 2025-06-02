@@ -6,6 +6,11 @@
 </head>
 
 <body>
+  {% for message in get_flashed_messages() %}
+  <div class="info">
+    {{ message }}
+  </div>
+  {% endfor %}
   {% if session.username %}
   <p>
     Olet kirjautunut nimellä {{ session.username }}
