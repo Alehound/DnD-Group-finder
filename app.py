@@ -37,7 +37,7 @@ def show_item(item_id):
         abort(404)
     classes = items.get_classes(item_id)
     sign_ups = items.get_sign_ups(item_id)
-    user_id = session["user_id"]
+    user_id = session.get("user_id")
     is_owner = user_id is not None and user_id == item["user_id"]
     is_signed_up = any(s["user_id"] == user_id for s in sign_ups) if user_id else False
 

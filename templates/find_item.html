@@ -10,13 +10,13 @@
 
     <form action="/find_item" method="get">
         <p>
-            Hakusana: <input type="text" name="query" value="{{ query }}">
+            <label for="query">Hakusana:</label> <input type="text" name="query" value="{{ query }}">
         </p>
         <input type="submit" value="Lähetä">
     </form>
 
     <p>
-        <a href="/">Takaisin</a>
+        <a href="/">Palaa takaisin</a>
     </p>
 
     {% if query %}

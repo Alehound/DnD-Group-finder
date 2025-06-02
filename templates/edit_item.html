@@ -9,13 +9,13 @@
     <h1>Ilmoituksen muokkaus</h1>
   <form action="/update_item" method="post">
     <p>
-      Otsikko: <br />
+      <label for="title">Otsikko:</label> <br />
       <input type="text" name="title" value="{{ item.title }}" maxlength="50" required/>
     </p>
 
     {% for class in all_classes %}
     <p>
-      {{ class }}: <br />
+      <label for="class{{ class }}">{{ class }}</label>: <br />
       <select name="classes">
         {% for option in all_classes[class] %}
           {% if classes[class] == option %}
@@ -29,13 +29,16 @@
     {% endfor %}
 
     <p>
-        Kuvaus: <br />
+        <label for="description">Kuvaus:</label> <br />
         <textarea rows="8" cols="50" name="description" maxlength="1000" required>{{ item.description }} </textarea>
     </p>
     <input type="hidden" name="item_id" value="{{ item.id }}" />
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
     <input type="submit" value="Päivitä ilmoitusta" />
   </form>
+  <p>
+  <a href="/">Palaa takaisin</a>
+  </p>
 </body>
 
 </html>

@@ -56,7 +56,7 @@
     {% if logged_in %}
       {% if not is_signed_up and not is_owner %}
         {% if  sign_ups | count < item.participants %}
-          <h2>Ilmoittautuminen</h2>
+          <h2>Ilmoittaudu</h2>
           <form action="/create_sign_up" method="post">
             <textarea name="application" rows="8" cols="60" maxlength="1000" required></textarea>
             <input type="hidden" name="item_id" value="{{ item.id }}">
