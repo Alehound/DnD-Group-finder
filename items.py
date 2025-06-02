@@ -20,8 +20,8 @@ def add_item(title, description, participants, user_id, classes):
     item_id = db.last_insert_id()
 
     sql = "INSERT INTO item_classes (item_id, title, value) VALUES (?, ?, ?)"
-    for title, value in classes:
-        db.execute(sql, [item_id, title, value])
+    for class_title, class_value in classes:
+        db.execute(sql, [item_id, class_title, class_value])
 
 def add_sign_up(item_id, user_id, application):
     sql = "INSERT INTO sign_ups (item_id, user_id, application) VALUES (?, ?, ?)"
@@ -76,8 +76,8 @@ def update_item(item_id, title, description, classes):
     db.execute(sql, [item_id])
 
     sql = "INSERT INTO item_classes (item_id, title, value) VALUES (?, ?, ?)"
-    for title, value in classes:
-        db.execute(sql, [item_id, title, value])
+    for class_title, class_value in classes:
+        db.execute(sql, [item_id, class_title, class_value])
 
 def remove_item(item_id):
     sql = "DELETE FROM sign_ups WHERE item_id = ?"

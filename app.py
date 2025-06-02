@@ -27,8 +27,8 @@ def show_user(user_id):
     user = users.get_user(user_id)
     if not user:
         abort(404)
-    items = users.get_items(user_id)
-    return render_template("show_user.html", user=user, items=items)
+    user_items = users.get_items(user_id)
+    return render_template("show_user.html", user=user, items=user_items)
 
 @app.route("/show_item/<int:item_id>")
 def show_item(item_id):
@@ -191,8 +191,8 @@ def remove_item(item_id):
         if "remove" in request.form:
             items.remove_item(item_id)
             return redirect("/")
-        else:
-            return redirect("/show_item/" + str(item_id))
+
+        return redirect("/show_item/" + str(item_id))
 
 @app.route("/find_item")
 def find_item():
