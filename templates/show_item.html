@@ -30,7 +30,7 @@
     </ul>
   </p>
   {% endif %}
-  <p>
+  <p style="white-space: pre-wrap;">
     {{ item.description }}
   </p>
   <p>
@@ -41,7 +41,7 @@
     {% for sign_up in sign_ups %}
     <li>
       <a href="/user/{{ sign_up.user_id }}">{{ sign_up.username }}</a>:
-      <p>{{ sign_up.application }}</p>
+      <p style="white-space: pre-wrap;">{{ sign_up.application }}</p>
       {% if sign_up.user_id == session.user_id or is_owner %}
         <form action="/remove_sign_up" method="post">
           <input type="hidden" name="item_id" value="{{ item.id }}">
