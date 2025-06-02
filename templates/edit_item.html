@@ -33,7 +33,7 @@
         <textarea rows="8" cols="50" name="description" maxlength="1000" required>{{ item.description }} </textarea>
     </p>
     <input type="hidden" name="item_id" value="{{ item.id }}" />
-
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
     <input type="submit" value="Päivitä ilmoitusta" />
   </form>
 </body>

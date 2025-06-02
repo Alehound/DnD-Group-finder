@@ -46,6 +46,7 @@
         <form action="/remove_sign_up" method="post">
           <input type="hidden" name="item_id" value="{{ item.id }}">
           <input type="hidden" name="sign_up_id" value="{{ sign_up.id }}">
+          <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
           <input type="submit" value="Poista">
         </form>
       {% endif %}
@@ -59,7 +60,8 @@
           <form action="/create_sign_up" method="post">
             <textarea name="application" rows="8" cols="60" maxlength="1000" required></textarea>
             <input type="hidden" name="item_id" value="{{ item.id }}">
-            <input type="submit" value="Ilmoittaudu" />
+            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+            <input type="submit" value="Ilmoittaudu">
           </form>
         {% else %}
           <p>Et voi ilmoittautua sillä peli on täynnä.</p>
